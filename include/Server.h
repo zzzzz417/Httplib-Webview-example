@@ -5,5 +5,6 @@ namespace ApiHandlers {
     void getData(const httplib::Request& request, httplib::Response& response);
     void upData(const httplib::Request& request, httplib::Response& response);
     void addData(const httplib::Request& request, httplib::Response& response);
+    void delData(const httplib::Request& request, httplib::Response& response);
 }
 #endif

@@ -45,6 +45,7 @@ int main()
     basic_server.Get("/api/getData",ApiHandlers::getData);
     basic_server.Post("/api/upData",ApiHandlers::upData);   
     basic_server.Post("/api/addData",ApiHandlers::addData);
+    basic_server.Post("/api/delData",ApiHandlers::delData);
 
     basic_server.set_mount_point("/","../Web");
     int port=basic_server.bind_to_any_port("127.0.0.1");
