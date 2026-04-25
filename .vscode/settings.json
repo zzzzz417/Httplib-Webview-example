@@ -1,0 +1,14 @@
+{
+    "C_Cpp.default.compilerPath": "c:\\Users\\zhaozhao\\Desktop\\cmake better text\\cmake-better-toolchains\\win32-x64\\bin\\c++.exe",
+    "C_Cpp.default.intelliSenseMode": "${default}",
+    "C_Cpp.default.includePath": [
+        "${workspaceFolder}/include",
+        "${workspaceFolder}/src"
+    ],
+    "C_Cpp.default.cppStandard": "c++20",
+    "C_Cpp.default.cStandard": "c17",
+
+    // "git.enabled": false
+    // "scm.providers.visible": 0
+
+}
