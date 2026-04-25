@@ -1,9 +1,10 @@
 # Webview-Httplib 桌面混合应用框架
 基于 **cpp-httplib + Webview** 实现的轻量桌面(cpp-web)混合开发框架
-同类型框架:Tauri(Rust-Webview)
+> 同类型框架:Tauri(Rust-Webview)
 - 在Windows使用Webview2网页引擎
 - 支持macOS(WKWebView)
 - 支持Linux(WebKitGTK)
+ 
 C++ 后端 HTTP 服务 + 前端 HTML/CSS/JS 界面，前后端双向通信，原生窗口嵌入 Web 引擎，无臃肿依赖。
 
 ## 特性
