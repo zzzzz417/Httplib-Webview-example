@@ -1,12 +1,13 @@
 /* 1. 变量与基础重置 */
 :root {
-    --primary: #6366f1;
+    --primary: #8486f0;
     --primary-hover: #4f46e5;
-    --bg: #f8fafc;
+    --bg: #eff0f1;
     --card: #ffffff;
     --text-main: #1e293b;
     --text-sub: #64748b;
-    --danger: #ef4444;
+    --danger: #de7070;
+    --tool:#888888de;
 }
 
 body {
@@ -38,14 +39,17 @@ header h1 { font-size: 2.2rem; font-weight: 800; margin: 0; letter-spacing: -1.5
 
 .scroll-container {
     flex: 1;
+    overflow-x: auto;
     overflow-y: auto;
     padding: 20px 5px 100px 5px;
+    padding-left: 120px;
+    padding-right: 120px;
     scrollbar-width: none;
 }
 .scroll-container::-webkit-scrollbar { display: none; }
 
 /* 3. 卡片组件 */
-.card {
+/* .card {
     background: var(--card);
     border-radius: 24px;
     padding: 32px;
@@ -57,9 +61,129 @@ header h1 { font-size: 2.2rem; font-weight: 800; margin: 0; letter-spacing: -1.5
     box-shadow: 0 10px 15px -3px rgba(0,0,0,0.03);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
-    overflow: hidden; /* 必须溢出隐藏以截断光晕 */
+    overflow: hidden; 
+}*/
+/* --- 基础卡片容器修复 --- */
+.card {
+    position: relative;
+    overflow: visible !important;
+    margin-bottom: 24px; /* 保持卡片间的距离 */
+    background: transparent;
+    border-radius: 24px;
+    /* border: none !important; */
 }
 
+.card-content-wrapper {
+    position: relative;
+    z-index: 5;
+    overflow: hidden;
+    background: var(--card); /* 使用原有的白色背景变量 */
+    border-radius: 24px;      /* 保持 24px 圆角 */
+    padding: 32px;           /* 保持 32px 内边距 */
+    display: flex;
+    align-items: center;
+    gap: 24px;               /* 保持 24px 元素间距 */
+    border: 1px solid rgba(226, 232, 240, 0.7);
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.03);
+    /* transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); */
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+.card-actions-layer {
+    position: absolute;
+    right: 15px;
+    top: 0;
+    bottom: 0;
+    width: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 1;
+    /* 数值越大越圆，可自行调整 */
+    border-radius: 50px; 
+    /* 可选：加背景色能更清晰看到圆角效果 */
+    /* background-color: rgba(0,0,0,0.1); */
+}
+/* .action-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: none;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+}
+.btn-edit { background-color: var(--tool); }
+.btn-delete { background-color: var(--tool); } */
+
+/* --- 按钮基础：纯色小圆点 --- */
+.action-btn {
+    width: 32px;  /* 稍微调小了一点点，显得更精致 */
+    height: 32px;
+    border-radius: 50%;
+    border: none; /* 去掉边框，走极简纯色风 */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    font-size: 0;   /* 彻底隐藏按钮内的文字 */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); /* 黑色背景下的微弱深度感 */
+}
+
+/* --- 修改按钮：淡蓝色 --- */
+.btn-edit {
+    background-color: rgba(147, 197, 253, 0.85) !important; /* 淡蓝色 (Sky Blue) */
+}
+
+/* --- 删除按钮：淡红色 --- */
+.btn-delete {
+    background-color: rgba(252, 165, 165, 0.85) !important; /* 淡红色 (Rose Red) */
+}
+
+/* --- 悬停交互：变亮一点并轻微放大 --- */
+.action-btn:hover {
+    transform: scale(1.1);
+    filter: brightness(1.1);
+    opacity: 1;
+}
+
+/* 点击反馈 */
+.action-btn:active {
+    transform: scale(0.95);
+}
+
+
+/* 4. 激活滑动状态 */
+.card.swiped .card-content-wrapper {
+    transform: translateX(-110px);
+}
+
+/* 5. 右下角三点图标 */
+.more-trigger {
+    position: absolute;
+    right: 15px;
+    bottom: 12px;
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+    gap: 3px;
+}
+
+.more-trigger span { width: 4px; height: 4px; background: #cbd5e1; border-radius: 50%; }
+.more-trigger:hover span { background-color: #6366f1; }
+
+/* 兼容：完成状态的灰度滤镜应用在 wrapper 上 */
+.card.completed .card-content-wrapper {
+    opacity: 0.6;
+    filter: grayscale(0.8);
+}
 .card:hover { transform: scale(1.01) translateY(-4px); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.05); }
 .card.completed { opacity: 0.6; filter: grayscale(0.8); }
 
@@ -80,13 +204,17 @@ header h1 { font-size: 2.2rem; font-weight: 800; margin: 0; letter-spacing: -1.5
     bottom: -30px; right: -30px;
     width: 500px; height: 500px;
     pointer-events: none;
+    z-index: 0;
 }
 
 .glow-spot {
     width: 100%; height: 100%;
     border-radius: 50%;
-    filter: blur(40px);
-    opacity: 0.4;
+    /* filter: blur(40px); */
+    /* opacity: 0.4; */
+    filter: blur(100px);     /* 1. 极高模糊：模糊半径越大，边缘越虚，越有“雾气”感 */
+    opacity: 0.01;          /* 2. 极低不透明度：模拟光线透过厚纸背的效果 */
+    mix-blend-mode: screen; /* 3. 混合模式：让颜色与背景自然融合，而不是生硬覆盖 */    
     animation: glow-breathe 4s infinite ease-in-out;
 }
 
@@ -102,35 +230,46 @@ header h1 { font-size: 2.2rem; font-weight: 800; margin: 0; letter-spacing: -1.5
     background: radial-gradient(circle, #ef4444 0%, transparent 1000%); 
 } */
 /* 过期红色 */
-.status-late .glow-spot {
-    background: radial-gradient(circle, #ef4444 0%, transparent 1000%);
+.card-content-wrapper.status-late .glow-spot {
+    background: radial-gradient(circle, #ef4444 0%, transparent 100%);
     animation-duration: 0.8s; /* 红色呼吸更快 */
+    /* opacity: 0.1; */
 }
-
+/* 正在进行中 - 粉色 (Hot Pink) */
+.card-content-wrapper.status-running .glow-spot {
+    background: radial-gradient(circle, #f07474ab 0%, transparent 1000%);
+    /* opacity: 0.8; */
+    /* 让粉色光晕有快速跳动的脉冲感 */
+    animation: glow-breathe 1.5s infinite alternate ease-in-out;
+}
 /* 今日未过期未完成 - 黄色 */
-.status-today-todo .glow-spot {
+.card-content-wrapper.status-today-todo .glow-spot {
     background: radial-gradient(circle, #f59e0b 0%, transparent 1000%);
+    /* opacity: 0.1; */
 }
 
 /* 今日已完成 - 深绿色 (Forest Green) */
-.status-today-done .glow-spot {
-    background: radial-gradient(circle, #26f4d2 0%, transparent 1000%);
-    opacity: 1;           /* 完全不透明 */
-    filter: blur(25px);   /* 减小模糊感，让颜色更聚拢、更浓郁 */
+.card-content-wrapper.status-today-done .glow-spot {
+    background: radial-gradient(circle, #65c1b2 0%, transparent 100%);
+    /* opacity: 0.1;           完全不透明 */
+    /* filter: blur(25px);  */
 }
 /* 昨日之前已经完成 - 翡翠绿 (Emerald) */
-.status-past-done .glow-spot {
-    background: radial-gradient(circle, #10b981 0%, transparent 1000%);
+.card-content-wrapper.status-past-done .glow-spot {
+    background: radial-gradient(circle, #1c6a50 0%, transparent 1000%);
+    /* opacity: 0.1; */
 }
 
 /* 近期 - 蓝色 */
-.status-near-future .glow-spot {
+.card-content-wrapper.status-near-future .glow-spot {
     background: radial-gradient(circle, #3b82f6 0%, transparent 1000%);
+    /* opacity: 0.1; */
 }
 
 /* 远期 (15天以上) - 紫色 */
-.status-far-future .glow-spot {
+.card-content-wrapper.status-far-future .glow-spot {
     background: radial-gradient(circle, #8b5cf6 0%, transparent 1000%);
+    /* opacity: 0.1; */
 }
 
 /* 5. 交互组件 (复选框与按钮) */
@@ -216,4 +355,18 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-app
 @media (max-width: 600px) {
     .card-details { flex-direction: column; gap: 5px; }
     .app-container { width: 95vw; }
+}
+
+#remark {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box; 
+
+  min-height: 80px;
+  max-height: 160px;
+  resize: vertical; 
+
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 12px;
 }
