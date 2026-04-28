@@ -38,7 +38,7 @@ if(WIN32)
     
     # 链接核心库
     target_link_libraries(${PROJECT_NAME} PRIVATE 
-        ws2_32 ole32 uuid version shlwapi
+        dwmapi ws2_32 ole32 uuid version shlwapi
     )
     
     # 自动拷贝 WebView2Loader.dll 到生成目录

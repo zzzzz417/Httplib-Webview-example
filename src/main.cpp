@@ -7,6 +7,8 @@
 #include<string>
 #include <thread>
 #include <variant>
+#include <dwmapi.h>
+#include <windowsx.h>
 
 #include"httplib.h"
 #include"nlohmann/json.hpp"
@@ -24,8 +26,7 @@
 #include"webview.h"
 
 std::string url="http://127.0.0.1:";
-int main()
-{
+int main(){
     #ifdef _WIN32
         SetConsoleCP(CP_UTF8);
         SetConsoleOutputCP(CP_UTF8);
@@ -75,6 +76,7 @@ int main()
     HICON hIcon = LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(101));
     SendMessageW(hwnd, WM_SETICON, ICON_BIG, (LPARAM)hIcon);
     SendMessageW(hwnd, WM_SETICON, ICON_SMALL, (LPARAM)hIcon);
+    //------------------------
 #endif
 
     w.run();
@@ -84,3 +86,4 @@ int main()
     }
     return 0;    
 }
+

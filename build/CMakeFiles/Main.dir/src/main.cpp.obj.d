@@ -457,6 +457,10 @@ CMakeFiles/Main.dir/src/main.cpp.obj: D:\Webview_httplib\src\main.cpp \
  D:/mingw/mingw64_posix/include/c++/15.2.0/variant \
  D:/mingw/mingw64_posix/include/c++/15.2.0/bits/enable_special_members.h \
  D:/mingw/mingw64_posix/include/c++/15.2.0/bits/monostate.h \
+ D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/dwmapi.h \
+ D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/uxtheme.h \
+ D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/commctrl.h \
+ D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/windowsx.h \
  D:/Webview_httplib/include/httplib.h \
  D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/io.h \
  D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/winsock2.h \
@@ -660,7 +664,6 @@ CMakeFiles/Main.dir/src/main.cpp.obj: D:\Webview_httplib\src\main.cpp \
  D:/Webview_httplib/include/webview/detail/user_script.hh \
  D:/Webview_httplib/include/webview/detail/utility/string.hh \
  D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/shlobj.h \
- D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/commctrl.h \
  D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/shlguid.h \
  D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/isguids.h \
  D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/exdisp.h \

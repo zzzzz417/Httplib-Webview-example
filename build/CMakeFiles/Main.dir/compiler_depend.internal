@@ -1089,6 +1089,7 @@ CMakeFiles/Main.dir/src/main.cpp.obj
  D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/docobj.h
  D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/dpapi.h
  D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/driverspecs.h
+ D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/dwmapi.h
  D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/errhandlingapi.h
  D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/errno.h
  D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/eventtoken.h
@@ -1234,6 +1235,7 @@ CMakeFiles/Main.dir/src/main.cpp.obj
  D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/unknwnbase.h
  D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/urlmon.h
  D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/utilapiset.h
+ D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/uxtheme.h
  D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/vadefs.h
  D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/virtdisk.h
  D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/wchar.h
@@ -1245,6 +1247,7 @@ CMakeFiles/Main.dir/src/main.cpp.obj
  D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/wincrypt.h
  D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/windef.h
  D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/windows.h
+ D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/windowsx.h
  D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/winefs.h
  D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/winerror.h
  D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/wingdi.h

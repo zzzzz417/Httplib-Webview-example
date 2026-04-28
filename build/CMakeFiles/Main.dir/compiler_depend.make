@@ -1087,6 +1087,7 @@ CMakeFiles/Main.dir/src/main.cpp.obj: D:/Webview_httplib/src/main.cpp \
   D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/docobj.h \
   D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/dpapi.h \
   D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/driverspecs.h \
+  D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/dwmapi.h \
   D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/errhandlingapi.h \
   D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/errno.h \
   D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/eventtoken.h \
@@ -1232,6 +1233,7 @@ CMakeFiles/Main.dir/src/main.cpp.obj: D:/Webview_httplib/src/main.cpp \
   D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/unknwnbase.h \
   D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/urlmon.h \
   D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/utilapiset.h \
+  D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/uxtheme.h \
   D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/vadefs.h \
   D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/virtdisk.h \
   D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/wchar.h \
@@ -1243,6 +1245,7 @@ CMakeFiles/Main.dir/src/main.cpp.obj: D:/Webview_httplib/src/main.cpp \
   D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/wincrypt.h \
   D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/windef.h \
   D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/windows.h \
+  D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/windowsx.h \
   D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/winefs.h \
   D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/winerror.h \
   D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/wingdi.h \
@@ -1269,6 +1272,8 @@ CMakeFiles/Main.dir/src/main.cpp.obj: D:/Webview_httplib/src/main.cpp \
   D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/wtypesbase.h
 
 
+D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/uxtheme.h:
+
 D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/shtypes.h:
 
 D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/shobjidl.h:
@@ -1290,6 +1295,8 @@ D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/knownfolders.h:
 D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/exdisp.h:
 
 D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/eventtoken.h:
+
+D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/dwmapi.h:
 
 D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/docobj.h:
 
@@ -1446,6 +1453,8 @@ D:/Webview_httplib/include/webview/detail/optional.hh:
 D:/mingw/mingw64_posix/lib/gcc/x86_64-w64-mingw32/15.2.0/include/lzcntintrin.h:
 
 D:/mingw/mingw64_posix/include/c++/15.2.0/tr1/modified_bessel_func.tcc:
+
+D:/mingw/mingw64_posix/x86_64-w64-mingw32/include/windowsx.h:
 
 D:/mingw/mingw64_posix/include/c++/15.2.0/tr1/legendre_function.tcc:
 
