@@ -1,7 +1,5 @@
 #include<iostream>
-#include<stdio.h>
 #include<windows.h>
-#include<time.h>
 #include<vector>
 #include<fstream>
 #include<string>
@@ -25,12 +23,33 @@
 #endif
 #include"webview.h"
 
+#ifdef _WIN32
+HMODULE LoadDllFromResource(int resourceId)
+{
+    HRSRC hRes = FindResource(NULL, MAKEINTRESOURCE(resourceId), RT_RCDATA);
+    HGLOBAL hGlobal = LoadResource(NULL, hRes);
+    DWORD dllSize = SizeofResource(NULL, hRes);
+    void* dllData = LockResource(hGlobal);
+    HMODULE hMod = ::LoadLibraryExA(
+        (LPCSTR)dllData,
+        NULL,
+        LOAD_LIBRARY_AS_DATAFILE | LOAD_LIBRARY_AS_IMAGE_RESOURCE
+    );
+    FreeResource(hGlobal);
+    return hMod;
+}
+#endif
+
 std::string url="http://127.0.0.1:";
 int main(){
-    #ifdef _WIN32
-        SetConsoleCP(CP_UTF8);
-        SetConsoleOutputCP(CP_UTF8);
-    #endif
+#ifdef _WIN32
+    SetConsoleCP(CP_UTF8);
+    SetConsoleOutputCP(CP_UTF8);
+    LoadDllFromResource(IDR_DLL_WEBVIEW2LOADER);
+    LoadDllFromResource(IDR_DLL_LIBGCC01);
+    LoadDllFromResource(IDR_DLL_LIBSTD01);
+    LoadDllFromResource(IDR_DLL_LIBSTD02);
+#endif
 
     httplib::Server basic_server;
 
@@ -43,10 +62,6 @@ int main(){
         }else return httplib::Server::HandlerResponse::Unhandled;
     });
 
-    basic_server.Get("/api/getData",ApiHandlers::getData);
-    basic_server.Post("/api/upData",ApiHandlers::upData);   
-    basic_server.Post("/api/addData",ApiHandlers::addData);
-    basic_server.Post("/api/delData",ApiHandlers::delData);
 
     basic_server.set_mount_point("/","../Web");
     int port=basic_server.bind_to_any_port("127.0.0.1");
@@ -61,7 +76,7 @@ int main(){
     basic_server.wait_until_ready();
 
     webview::webview w(false, nullptr);
-    w.set_title("Schedule");
+    w.set_title("Inno Studio Cad");
     // w.set_size(2050, 1153, WEBVIEW_HINT_MIN);
     w.set_size(1600, 900, WEBVIEW_HINT_FIXED);
     // w.set_size(1600, 900, WEBVIEW_HINT_NONE);

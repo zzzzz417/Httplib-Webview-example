@@ -1,1 +1,7 @@
+#include "resource.h"
+
 101 ICON "app.ico"
+IDR_DLL_WEBVIEW2LOADER RCDATA "lib/WebView2Loader.dll"
+IDR_DLL_LIBGCC01 RCDATA "lib/libgcc_s_seh-1.dll"
+IDR_DLL_LIBSTD01 RCDATA "lib/libstdc++-6.dll"
+IDR_DLL_LIBSTD02 RCDATA "lib/libwinpthread-1.dll"

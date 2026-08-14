@@ -1,0 +1,44 @@
+name: main.yml
+on: push
+jobs:
+  build:
+    runs-on: windows-2022
+    strategy:
+      matrix:
+        build_type: [ Release, Debug ]
+        arch: [ x64 ] # 可选加 x86
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: 配置 MSVC 编译器环境
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: ${{ matrix.arch }}
+
+      - name: 缓存 CMake 构建中间文件
+        uses: actions/cache@v3
+        with:
+          path: build_${{ matrix.arch }}_${{ matrix.build_type }}
+          key: ${{ runner.os }}-cmake-${{ matrix.arch }}-${{ matrix.build_type }}-${{ github.sha }}
+
+      - name: 创建构建目录 & CMake 配置
+        run: |
+          mkdir build_${{ matrix.arch }}_${{ matrix.build_type }}
+          cd build_${{ matrix.arch }}_${{ matrix.build_type }}
+          cmake .. -A ${{ matrix.arch }} -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+
+      - name: CMake 编译项目
+        run: |
+          cd build_${{ matrix.arch }}_${{ matrix.build_type }}
+          cmake --build . --config ${{ matrix.build_type }} --parallel
+
+      - name: 上传编译产物到 Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: Windows-${{ matrix.arch }}-${{ matrix.build_type }}-Binaries
+          path: |
+            build_${{ matrix.arch }}_${{ matrix.build_type }}/**/*.exe
+            build_${{ matrix.arch }}_${{ matrix.build_type }}/**/*.dll
+            build_${{ matrix.arch }}_${{ matrix.build_type }}/**/*.lib
+          retention-days: 30
