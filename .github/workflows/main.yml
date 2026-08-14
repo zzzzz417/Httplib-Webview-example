@@ -1,44 +1,44 @@
-name: main.yml
+name: Windows MinGW Build
+
 on: push
+
 jobs:
-  build:
+  build-mingw:
     runs-on: windows-2022
     strategy:
       matrix:
-        build_type: [ Release, Debug ]
-        arch: [ x64 ] # 可选加 x86
+        arch: [x64]
+        build_type: [Release, Debug]
+
     steps:
       - name: Checkout source code
         uses: actions/checkout@v4
 
-      - name: 配置 MSVC 编译器环境
-        uses: ilammy/msvc-dev-cmd@v1
+      # 安装 MinGW-w64 环境
+      - name: Setup MinGW-w64
+        uses: ilammy/setup-mingw@v1
         with:
           arch: ${{ matrix.arch }}
 
-      - name: 缓存 CMake 构建中间文件
+      # 缓存构建目录
+      - name: Cache CMake build dir
         uses: actions/cache@v3
         with:
-          path: build_${{ matrix.arch }}_${{ matrix.build_type }}
-          key: ${{ runner.os }}-cmake-${{ matrix.arch }}-${{ matrix.build_type }}-${{ github.sha }}
+          path: build_mingw_${{ matrix.arch }}_${{ matrix.build_type }}
+          key: ${{ runner.os }}-mingw-${{ matrix.arch }}-${{ matrix.build_type }}-${{ github.sha }}
 
-      - name: 创建构建目录 & CMake 配置
+      - name: CMake Configure & Build (MinGW Makefiles)
         run: |
-          mkdir build_${{ matrix.arch }}_${{ matrix.build_type }}
-          cd build_${{ matrix.arch }}_${{ matrix.build_type }}
-          cmake .. -A ${{ matrix.arch }} -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+          mkdir build_mingw_${{ matrix.arch }}_${{ matrix.build_type }}
+          cd build_mingw_${{ matrix.arch }}_${{ matrix.build_type }}
+          cmake .. -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+          mingw32-make -j$(nproc)
 
-      - name: CMake 编译项目
-        run: |
-          cd build_${{ matrix.arch }}_${{ matrix.build_type }}
-          cmake --build . --config ${{ matrix.build_type }} --parallel
-
-      - name: 上传编译产物到 Artifacts
+      - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: Windows-${{ matrix.arch }}-${{ matrix.build_type }}-Binaries
+          name: Windows-MinGW-${{ matrix.arch }}-${{ matrix.build_type }}-Bin
           path: |
-            build_${{ matrix.arch }}_${{ matrix.build_type }}/**/*.exe
-            build_${{ matrix.arch }}_${{ matrix.build_type }}/**/*.dll
-            build_${{ matrix.arch }}_${{ matrix.build_type }}/**/*.lib
+            build_mingw_${{ matrix.arch }}_${{ matrix.build_type }}/**/*.exe
+            build_mingw_${{ matrix.arch }}_${{ matrix.build_type }}/**/*.dll
           retention-days: 30
