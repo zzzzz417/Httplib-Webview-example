@@ -1,56 +1,100 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>日程管理器</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-</head>
-<body>
-    <div class="app-container">
-        <header>
-            <div class="logo-area">
-                <h1>我的日程</h1>
-                <p class="subtitle">今日事，今日毕</p>
-            </div>
-            <button id="addBtn" class="primary-btn">＋ 新增任务</button>
-        </header>
+<!doctype html>
+<html lang="zh-CN" translate="no" class="notranslate">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2VBNH5JYS6"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'G-2VBNH5JYS6');
+    </script>
 
-        <main id="scheduleList" class="scroll-container">
-            </main>
-    </div>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="google" content="notranslate" />
 
-    <div id="modal" class="modal">
-        <div class="modal-content">
-            <h2>✨ 新增任务</h2>
-            <div class="input-group">
-                <input type="text" id="ocName" placeholder="任务标题..." class="main-input">
-                
-                <div class="time-picker-container">
-                    <label>开始时间</label>
-                    <div class="date-row">
-                        <input type="date" id="beginDate">
-                    </div>
-                    <div class="hms-row">
-                        <input type="number" id="hr" min="0" max="23" placeholder="时">
-                        <span>:</span>
-                        <input type="number" id="min" min="0" max="59" placeholder="分">
-                        <span>:</span>
-                        <input type="number" id="sec" min="0" max="59" placeholder="秒">
-                    </div>
-                </div>
+    <title>INNO Studio 基于自然语言的AI CAD构建器</title>
+    <meta
+      name="description"
+      content="A modern OpenSCAD editor with live 3D preview, smart formatting, and AI copilot. Free and open source."
+    />
 
-                <input type="number" id="stayTime" placeholder="预计持续时长 (分钟)">
-                <textarea id="remark" placeholder="添加备忘备注..."></textarea>
-            </div>
-            <div class="modal-actions">
-                <button class="btn-cancel" onclick="closeModal()">取消</button>
-                <button class="btn-save" onclick="submitData()">立即保存</button>
-            </div>
-        </div>
-    </div>
+    <!-- Favicons -->
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32" />
+    <link rel="icon" href="/favicon-16x16.png" type="image/png" sizes="16x16" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.json" />
 
-    <script src="script.js"></script>
-</body>
+    <!-- Theme -->
+    <meta name="theme-color" content="#f7f3ea" />
+    <meta name="color-scheme" content="light dark" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="InnoCAD Studio — Modern OpenSCAD Editor" />
+    <meta
+      property="og:description"
+      content="A modern OpenSCAD editor with live 3D preview, smart formatting, and AI copilot. Free and open source."
+    />
+    <meta property="og:image" content="/icon-512.png" />
+    <meta property="og:site_name" content="InnoCAD Studio" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="InnoCAD Studio — Modern OpenSCAD Editor" />
+    <meta
+      name="twitter:description"
+      content="A modern OpenSCAD editor with live 3D preview, smart formatting, and AI copilot. Free and open source."
+    />
+    <meta name="twitter:image" content="/icon-512.png" />
+
+    <script type="module" crossorigin src="/assets/index-dld_MYi2.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-CcARSfXM.css">
+  </head>
+  <body style="margin: 0; background: #f7f3ea">
+    <div id="root"></div>
+    <script>
+      (function () {
+        var isSecureContext =
+          location.protocol === 'https:' ||
+          location.hostname === 'localhost' ||
+          location.hostname === '127.0.0.1';
+        var ok =
+          typeof WebAssembly !== 'undefined' &&
+          (!isSecureContext ||
+            (typeof SharedArrayBuffer !== 'undefined' && window.crossOriginIsolated === true));
+        if (!ok) {
+          var missing = [];
+          if (typeof WebAssembly === 'undefined') missing.push('WebAssembly');
+          if (isSecureContext && typeof SharedArrayBuffer === 'undefined')
+            missing.push('SharedArrayBuffer');
+          if (isSecureContext && !window.crossOriginIsolated)
+            missing.push('Cross-Origin Isolation');
+          window.__UNSUPPORTED_BROWSER = true;
+          document.getElementById('root').innerHTML =
+            '<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:#f7f3ea;color:#111827;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;padding:2rem">' +
+            '<div style="max-width:480px;text-align:center">' +
+            '<div style="font-size:2rem;font-weight:700;color:#111827;margin-bottom:1rem">Browser Not Supported</div>' +
+            '<p style="line-height:1.6;margin-bottom:1.5rem;color:#4b5563">InnoCAD Studio requires features your browser doesn\u2019t support: <strong style="color:#111827">' +
+            missing.join(', ') +
+            '</strong>.</p>' +
+            '<p style="line-height:1.6;margin-bottom:2rem;color:#4b5563">Please use a recent version of <strong style="color:#111827">Chrome</strong>, <strong style="color:#111827">Edge</strong>, or <strong style="color:#111827">Firefox</strong>.</p>' +
+            '</div></div>';
+        }
+      })();
+    </script>
+    <script>
+      // Polyfill Object.hasOwn for Safari < 15.4 and other older browsers.
+      // Some dependencies (e.g. posthog-js, ai SDK) rely on this method.
+      if (!Object.hasOwn) {
+        Object.hasOwn = function (obj, prop) {
+          return Object.prototype.hasOwnProperty.call(obj, prop);
+        };
+      }
+    </script>
+  </body>
 </html>
