@@ -38,7 +38,7 @@ if(WIN32)
     
     # 链接核心库
     target_link_libraries(${PROJECT_NAME} PRIVATE 
-        dwmapi ws2_32 ole32 uuid version shlwapi
+        dwmapi ws2_32 winhttp ole32 uuid version shlwapi
     )
     
     # 自动拷贝 WebView2Loader.dll 到生成目录
@@ -47,6 +47,16 @@ if(WIN32)
             COMMAND ${CMAKE_COMMAND} -E copy_if_different
             "${CMAKE_CURRENT_SOURCE_DIR}/lib/WebView2Loader.dll"
             $<TARGET_FILE_DIR:${PROJECT_NAME}>
+        )
+    endif()
+
+    # Package the Vite build beside the executable. The application resolves
+    # this directory from the executable path instead of the process cwd.
+    if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/Web/index.html")
+        add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_directory
+            "${CMAKE_CURRENT_SOURCE_DIR}/Web"
+            "$<TARGET_FILE_DIR:${PROJECT_NAME}>/Web"
         )
     endif()
 

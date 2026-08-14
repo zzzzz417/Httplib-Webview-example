@@ -1,0 +1,8 @@
+#ifndef RES
+#define RES
+#define IDR_DLL_WEBVIEW2LOADER 1000
+#define IDR_DLL_LIBGCC01 1001
+#define IDR_DLL_LIBSTD01 1002
+#define IDR_DLL_LIBSTD02 1003
+
+#endif

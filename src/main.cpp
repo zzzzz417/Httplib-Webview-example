@@ -1,27 +1,41 @@
-#include<iostream>
-#include<windows.h>
-#include<vector>
-#include<fstream>
-#include<string>
+#include <filesystem>
+#include <string>
 #include <thread>
-#include <variant>
+
+#include "httplib.h"
+
+#include <windows.h>
 #include <dwmapi.h>
 #include <windowsx.h>
 
-#include"httplib.h"
-#include"nlohmann/json.hpp"
-#include"Server.h"
+#include "Proxy.h"
 
 #ifdef _WIN32
-#include <windows.h>
 #define PLATFORM_NAME "Windows"
+#ifndef WEBVIEW_WINAPI
 #define WEBVIEW_WINAPI
+#endif
 #elif __APPLE__
 #define PLATFORM_NAME "macOS"
 #elif __linux__
 #define PLATFORM_NAME "Linux"
 #endif
-#include"webview.h"
+#include "webview.h"
+#include "resource.h"
+
+namespace {
+
+constexpr int kLocalPort = 17321;
+
+std::filesystem::path executableDirectory() {
+    std::wstring path(32768, L'\0');
+    const DWORD length = GetModuleFileNameW(nullptr, path.data(), static_cast<DWORD>(path.size()));
+    if (length == 0 || length >= path.size()) return std::filesystem::current_path();
+    path.resize(length);
+    return std::filesystem::path(path).parent_path();
+}
+
+} // namespace
 
 #ifdef _WIN32
 HMODULE LoadDllFromResource(int resourceId)
@@ -40,7 +54,6 @@ HMODULE LoadDllFromResource(int resourceId)
 }
 #endif
 
-std::string url="http://127.0.0.1:";
 int main(){
 #ifdef _WIN32
     SetConsoleCP(CP_UTF8);
@@ -51,39 +64,74 @@ int main(){
     LoadDllFromResource(IDR_DLL_LIBSTD02);
 #endif
 
-    httplib::Server basic_server;
+    const auto webRoot = executableDirectory() / L"Web";
+    const auto indexPath = webRoot / L"index.html";
+    if (!std::filesystem::exists(indexPath)) {
+        MessageBoxW(
+            nullptr,
+            (L"Web resources were not found:\n" + indexPath.wstring()).c_str(),
+            L"Inno Studio Cad",
+            MB_OK | MB_ICONERROR
+        );
+        return -1;
+    }
 
-    std::string AUTH_TOKEN="aaaa";
-
-    basic_server.set_pre_request_handler([&](const httplib::Request& request, httplib::Response& response)->httplib::Server::HandlerResponse{
-        if(request.get_header_value("Auth-Token")!=AUTH_TOKEN){
-            response.status=403;
-            return httplib::Server::HandlerResponse::Handled;
-        }else return httplib::Server::HandlerResponse::Unhandled;
+    httplib::Server localServer;
+    localServer.set_default_headers({
+        {"Cross-Origin-Embedder-Policy", "credentialless"},
+        {"Cross-Origin-Opener-Policy", "same-origin"},
+        {"X-Content-Type-Options", "nosniff"},
     });
 
+    registerApiProxy(localServer, {L"cad2.innosoc.com", 443, true});
 
-    basic_server.set_mount_point("/","../Web");
-    int port=basic_server.bind_to_any_port("127.0.0.1");
-    if(port<0)return -1;
+    if (!localServer.set_mount_point("/", webRoot.string())) {
+        MessageBoxW(
+            nullptr,
+            L"Unable to mount the Web directory.",
+            L"Inno Studio Cad",
+            MB_OK | MB_ICONERROR
+        );
+        return -1;
+    }
 
-
-    url+=std::to_string(port);
-    std::thread server_thread([&]() {
-        basic_server.listen_after_bind();
+    localServer.set_error_handler([indexPath](
+        const httplib::Request& request,
+        httplib::Response& response
+    ) {
+        const auto accept = request.get_header_value("Accept");
+        const bool isPageNavigation = request.method == "GET" &&
+            accept.find("text/html") != std::string::npos &&
+            request.path.rfind("/api", 0) != 0;
+        if (response.status == 404 && isPageNavigation) {
+            response.status = 200;
+            response.set_file_content(indexPath.string(), "text/html; charset=utf-8");
+        }
     });
 
-    basic_server.wait_until_ready();
+    if (!localServer.bind_to_port("127.0.0.1", kLocalPort)) {
+        MessageBoxW(
+            nullptr,
+            L"Local port 17321 is already in use. Close the other instance and try again.",
+            L"Inno Studio Cad",
+            MB_OK | MB_ICONERROR
+        );
+        return -1;
+    }
+
+    std::thread serverThread([&localServer]() {
+        localServer.listen_after_bind();
+    });
+    localServer.wait_until_ready();
+
+    const std::string localUrl = "http://127.0.0.1:" + std::to_string(kLocalPort);
 
     webview::webview w(false, nullptr);
     w.set_title("Inno Studio Cad");
     // w.set_size(2050, 1153, WEBVIEW_HINT_MIN);
     w.set_size(1600, 900, WEBVIEW_HINT_FIXED);
     // w.set_size(1600, 900, WEBVIEW_HINT_NONE);
-    w.navigate(url);
-    w.bind("getToken",[&](const std::string str)->std::string{
-        return "\""+AUTH_TOKEN+"\"";
-    });
+    w.navigate(localUrl);
 
 #ifdef _WIN32
     void* hwnd_ptr =w.window().value();
@@ -95,10 +143,7 @@ int main(){
 #endif
 
     w.run();
-    basic_server.stop();
-    if(server_thread.joinable()) {
-        server_thread.join();
-    }
+    localServer.stop();
+    if (serverThread.joinable()) serverThread.join();
     return 0;    
 }
-
